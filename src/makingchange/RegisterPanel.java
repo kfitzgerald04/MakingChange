@@ -21,14 +21,21 @@ public class RegisterPanel extends JPanel {
         this.register = new Register();
         this.setLayout(new BorderLayout(10, 10));
 
-        // input panel
+        // creating input panel
         JPanel inputPanel = new JPanel();
         inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // create label and input field
+        JLabel label = new JLabel("Enter Amount: $");
         input = new JTextField(15);
         input.addActionListener(new InputListener());
 
-        inputPanel.add(new JLabel("Enter Amount: $"));
+        // adding a button
+        JButton calculateButton = new JButton("Calculate Change");
+        calculateButton.addActionListener(new InputListener());
+
+        inputPanel.add(label);
         inputPanel.add(input);
+        inputPanel.add(calculateButton);
 
         // change display panel
         changePanel = new PursePanel();

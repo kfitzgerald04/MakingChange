@@ -16,6 +16,7 @@ public class PursePanel extends JPanel {
     private static final int IMAGE_WIDTH = 150;
     private static final int IMAGE_HEIGHT = 75;
     private static final int SPACING = 10;
+    private String resultText;
 
 
     // creating a new panel to display the images
@@ -54,12 +55,14 @@ public class PursePanel extends JPanel {
         if (purse == null) return;
 
         int x = SPACING;
-        int y = SPACING;
+        int y = 40;
 
-        for (Map.Entry<DDenomination, Integer> entry : purse.getmoney().entrySet()) {
+        Map<DDenomination, Integer> contents = purse.getmoney();
+        for (Map.Entry<DDenomination, Integer> entry : contents.entrySet()) {
             DDenomination denom = entry.getKey();
             int count = entry.getValue();
             Image img = loadImage(denom.img());
+
 
             if (img != null && count > 0) {
                 // stacking the money, with an offest for visualization purposes

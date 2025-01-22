@@ -16,14 +16,14 @@ public class Register {
     public Register() {
         denominations = new ArrayList<>();
 
-        denominations.add(new DDenomination("Penny", 0.01, "coin", "penny.png"));
-        denominations.add(new DDenomination("Nickel", 0.05, "coin", "nickel.png"));
-        denominations.add(new DDenomination("Dime", 0.10, "coin", "dime.png"));
-        denominations.add(new DDenomination("Quarter", 0.25, "coin", "quarter.png"));
-        denominations.add(new DDenomination("One-Dollar", 1.0, "bill", "one.png"));
-        denominations.add(new DDenomination("Five-Dollar", 5.0, "bill", "five.png"));
-        denominations.add(new DDenomination("Ten-Dollar", 10.0, "bill", "ten.png"));
-        denominations.add(new DDenomination("Fifty-Dollar", 50.0, "bill", "fifty.png"));
+        denominations.add(new DDenomination("Penny", 0.01, "coin", "penny.jpg"));
+        denominations.add(new DDenomination("Nickel", 0.05, "coin", "nickel.jpg"));
+        denominations.add(new DDenomination("Dime", 0.10, "coin", "dime.jpg"));
+        denominations.add(new DDenomination("Quarter", 0.25, "coin", "quarter.jpg"));
+        denominations.add(new DDenomination("One-Dollar", 1.0, "bill", "one.jpg"));
+        denominations.add(new DDenomination("Five-Dollar", 5.0, "bill", "five.jpg"));
+        denominations.add(new DDenomination("Ten-Dollar", 10.0, "bill", "ten.jpg"));
+        denominations.add(new DDenomination("Fifty-Dollar", 50.0, "bill", "fifty.jpg"));
     }
 
 
