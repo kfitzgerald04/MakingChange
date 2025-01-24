@@ -7,80 +7,55 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.io.File;
 
 
 // this panel displays the GUI representation of the money
 public class PursePanel extends JPanel {
     private Purse purse;
-    private final Map<String, Image> imageCache;
-    private static final int IMAGE_WIDTH = 150;
-    private static final int IMAGE_HEIGHT = 75;
-    private static final int SPACING = 10;
-    private String resultText;
 
-
-    // creating a new panel to display the images
+    // constructor: creates an empty purse
     public PursePanel() {
         this.purse = new Purse();
-        this.imageCache = new HashMap<>();
-        setBackground(Color.WHITE);
+
     }
 
     // updates the contents of the purse, and refreshes the GUI
-    public void setPurse(Purse newPurse) {
+    public void updatePurse(Purse newPurse) {
         this.purse = newPurse;
-        repaint();
+        repaint(); // refresh panel
     }
-
-
-    // loads and caches the images, and returns them to the GUI
-    private Image loadImage(String imageName) {
-        if (!imageCache.containsKey(imageName)) {
-            try {
-                ImageIcon icon = new ImageIcon(getClass().getResource("/images/" + imageName));
-                Image scaled = icon.getImage().getScaledInstance(
-                        IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_SMOOTH);
-                imageCache.put(imageName, scaled);
-            } catch (Exception e) {
-                System.err.println("Error loading image: " + imageName);
-                return null;
-            }
-        }
-        return imageCache.get(imageName);
-    }
-
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (purse == null) return;
+        int x = 10;
+        int y = 10;
 
-        int x = SPACING;
-        int y = 40;
-
-        Map<DDenomination, Integer> contents = purse.getmoney();
-        for (Map.Entry<DDenomination, Integer> entry : contents.entrySet()) {
-            DDenomination denom = entry.getKey();
+        for (Map.Entry<DDenomination, Integer> entry : purse.getmoney().entrySet()) {
+            DDenomination denomination = entry.getKey();
             int count = entry.getValue();
-            Image img = loadImage(denom.img());
 
+            try {
+                // load the image for the denomination
+                Image img = ImageIO.read(new File("src/images/" + denomination.img()));
+                g.drawImage(img, x, y, 100, 100, this);
 
-            if (img != null && count > 0) {
-                // stacking the money, with an offest for visualization purposes
-                for (int i = 0; i < count; i++) {
-                    g.drawImage(img, x, y + (i * 3), this);
+                // drawing the denomination name and count
+                g.drawString(count + " x " + denomination.name(), x, y + 120);
+                x += 150; // increasing the spacing
+                if (x > getWidth() - 150) {
+                    x = 10;
+                    y += 200;
                 }
+            } catch (IOException e) {
+                g.drawString("Image not found for " + denomination.name(), x, y + 20);
 
-                // move to next position
-                x += IMAGE_WIDTH + SPACING;
-                if (x + IMAGE_WIDTH > getWidth()) {
-                    x = SPACING;
-                    y += IMAGE_HEIGHT + SPACING;
-                }
+
+
             }
-        }
-    }
 
-    public Dimension getPreferredSize() {
-        return new Dimension(600, 400);
+        }
     }
 }

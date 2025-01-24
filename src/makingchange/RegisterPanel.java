@@ -19,33 +19,21 @@ public class RegisterPanel extends JPanel {
     // creating a new panel with an input field and change display
     public RegisterPanel() {
         this.register = new Register();
-        this.setLayout(new BorderLayout(10, 10));
+        this.input = new JTextField(10);
+        this.changePanel = new PursePanel();
+        setLayout(new BorderLayout());
 
         // creating input panel
         JPanel inputPanel = new JPanel();
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // create label and input field
-        JLabel label = new JLabel("Enter Amount: $");
-        input = new JTextField(15);
-        input.addActionListener(new InputListener());
-
-        // adding a button
-        JButton calculateButton = new JButton("Calculate Change");
-        calculateButton.addActionListener(new InputListener());
-
-        inputPanel.add(label);
+        inputPanel.add(new JLabel("Enter Amount: "));
         inputPanel.add(input);
-        inputPanel.add(calculateButton);
+        input.addActionListener(new InputListener());
+        add(inputPanel, BorderLayout.NORTH);
 
-        // change display panel
-        changePanel = new PursePanel();
-        changePanel.setBorder(BorderFactory.createTitledBorder("Change"));
+        // creating change panel
+        add(changePanel, BorderLayout.CENTER);
 
-        // add it all together
-        this.add(inputPanel, BorderLayout.NORTH);
-        this.add(changePanel, BorderLayout.CENTER);
-    }
-
+}
 
     // handling the input fields
     private class InputListener implements ActionListener {
@@ -54,12 +42,12 @@ public class RegisterPanel extends JPanel {
             try {
                 double amount = Double.parseDouble(input.getText());
                 Purse purse = register.makeChange(amount);
-                changePanel.setPurse(purse);
+                changePanel.updatePurse(purse);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(RegisterPanel.this,
-                        "Please enter a valid amount",
-                        "Invalid Input",
-                        JOptionPane.ERROR_MESSAGE);
+                        "Invalid amount. Enter again");
+
+
             }
         }
     }
